@@ -22,13 +22,16 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(
-                        csrf -> csrf.disable())
+                        csrf -> csrf.disable()
+                )
                 .headers(
-                        headers -> headers.frameOptions(header -> header.sameOrigin()))
+                        headers -> headers.frameOptions(header -> header.sameOrigin())
+                )
                 .authorizeHttpRequests(
                         authorize -> authorize
-                                .requestMatchers("").permitAll()
-                                .anyRequest().authenticated())
+                                .requestMatchers("/api/v1/auth/**").permitAll()
+                                .anyRequest().authenticated()
+                )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
