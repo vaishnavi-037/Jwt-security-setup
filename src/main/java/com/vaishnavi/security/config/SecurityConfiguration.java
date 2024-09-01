@@ -29,6 +29,8 @@ public class SecurityConfiguration {
                 )
                 .authorizeHttpRequests(
                         authorize -> authorize
+                                .requestMatchers("/favicon.ico/**").permitAll()
+                                .requestMatchers("/h2-console/**").permitAll()
                                 .requestMatchers("/api/v1/auth/**").permitAll()
                                 .anyRequest().authenticated()
                 )
